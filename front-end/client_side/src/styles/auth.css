@@ -1,0 +1,239 @@
+/* auth.css */
+
+/* Variables */
+:root {
+    --twitter-blue: #1DA1F2;
+    --twitter-blue-hover: #1a91da;
+    --bg-primary: #f7f9fa;
+    --text-primary: #0F1419;
+    --text-secondary: #536471;
+    --border-color: #CFD9DE;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Auth Container */
+  .auth {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Form Container */
+  .auth__form {
+    max-width: 400px;
+    width: 100%;
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 0 20px var(--shadow);
+  }
+  
+  /* Logo */
+  .auth__logo {
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .auth__logo-image {
+    width: 200px;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .auth__logo-image:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Title */
+  .auth__title {
+    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Form Group */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group__label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .form-group__input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .form-group__input:focus {
+    border-color: var(--twitter-blue);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.1);
+  }
+  
+  .form-group__input::placeholder {
+    color: var(--text-secondary);
+  }
+  
+  /* Image Upload */
+  .image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .image-upload__preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px dashed var(--twitter-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+    transition: border-color 0.2s ease;
+  }
+  
+  .image-upload__preview:hover {
+    border-color: var(--twitter-blue-hover);
+  }
+  
+  .image-upload__preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .image-upload__button {
+    background-color: transparent;
+    border: none;
+    color: var(--twitter-blue);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .image-upload__button:hover {
+    background-color: rgba(29, 161, 242, 0.1);
+  }
+  
+  /* Submit Button */
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--twitter-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: var(--twitter-blue-hover);
+  }
+  
+  .submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Toggle */
+  .auth__toggle {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .auth__toggle-button {
+    background: none;
+    border: none;
+    color: var(--twitter-blue);
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .auth__toggle-button:hover {
+    color: var(--twitter-blue-hover);
+    text-decoration: underline;
+  }
+  
+  /* Error States */
+  .form-group__input--error {
+    border-color: #e0245e;
+  }
+  
+  .form-group__error {
+    color: #e0245e;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  /* Loading State */
+  .submit-button--loading {
+    position: relative;
+    color: transparent;
+  }
+  
+  .submit-button--loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin: -8px 0 0 -8px;
+    border: 2px solid var(--white);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s linear infinite;
+  }
+  
+  @keyframes button-loading-spinner {
+    from {
+      transform: rotate(0turn);
+    }
+    to {
+      transform: rotate(1turn);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .auth__form {
+      padding: 20px;
+    }
+  
+    .auth__title {
+      font-size: 20px;
+    }
+  
+    .form-group__input {
+      font-size: 14px;
+    }
+  }

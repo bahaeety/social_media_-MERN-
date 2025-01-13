@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd ../front-end/social && npm start\" \" nodemon server.js\""
+    "start": "concurrently \"cd ../front-end/client_side && npm start\" \" nodemon server.js\""
   },
   "author": "bahaa eddine tayab",
   "license": "ISC",
