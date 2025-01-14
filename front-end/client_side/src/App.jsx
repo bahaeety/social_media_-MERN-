@@ -1,12 +1,16 @@
 import AuthForm from "./pages/AuthForm/AuthForm";
-import NavBar from "./Components/Home/NavBar";
-import RightSidebar from "./Components/Home/SideBar"; 
+import Home from "./pages/Home/Home";
+import {createBrowserRouter , RouterProvider} from 'react-router-dom'
+
+const router = createBrowserRouter([
+  {path: '/Auth', element: <AuthForm />},
+
+]);
+
 function App() {
   return (
     <>
-    {/* <AuthForm /> */}
-    <NavBar />
-    <RightSidebar/>
+     <Home/>
     </>
   );
 }
