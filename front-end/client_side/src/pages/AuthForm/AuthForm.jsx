@@ -1,98 +1,103 @@
-import  { useState } from 'react';
-import  FormInput  from '../../Components/Auth/FormInput';
-import  ImageUpload  from '../../Components/Auth/ImageUpload';
-import  FormToggle  from '../../Components/Auth/FormToggle';
-import  Logo  from '../../assets/logo';
-import  SubmitButton  from '../../Components/Auth/SubmitButton';
-import '../../styles/auth.css';
+import React, { useState } from 'react';
+import EchoLogo from '../../assets/logo'
+import AuthFormInput from '../../Components/Auth/AuthFormInput';
+import SocialAuthButton from '../../Components/Auth/SocialAuthButton';
+import AuthFormHeader from '../../Components/Auth/AuthFormHeader';
+const AuthForm = () => {
+  const [isLogin, setIsLogin] = useState(true);
 
-const AuthForm  = () =>{
-    const [isLogin, setIsLogin] = useState(true);
-    const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        username: '',
-        email: '',
-        password: ''
-      });
-    const [errors, setErrors] = useState({});
-  const [imagePreview, setImagePreview] = useState(null);
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-
-  }
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  }
   return (
-    <div className='auth'>
-              <div className="auth__form">
-                <Logo />
-            </div>
-            <h2 className="auth__title">
-          {isLogin ? 'Sign in to Twitter' : 'Join Twitter today'}
-            </h2>
-            <form onSubmit={handleSubmit}>
-            {!isLogin && (
-                <>
-                 <ImageUpload 
-                 imagePreview={imagePreview}
-                 onImageChange={handleImageChange}
-               />
-                <FormInput 
-                label="Full Name"
-                value = {formData.name}
-                onChange = {handleInputChange}
-                name = "name"       
-                type = "text" 
-                error={errors.name}               
-                />
-                <FormInput
-                label= "Username"
-                value = {formData.username}
-                onChange = {handleInputChange}
-                name = "username"
-                type = "text"
-                error={errors.username}/>
-                </>
-            ) }
-            <FormInput
-            label="Email"
-            value = {formData.email}
-            onChange = {handleInputChange}
-            name = "email"
-            type = "email"
-            error={errors.email}/>
-            <FormInput
-            label="Password"
-            value = {formData.password}
-            onChange = {handleInputChange}
-            name = "password"
-            type = "password"
-            error={errors.password}/>
-            {errors.submit && (
-            <div className="form-group__error">{errors.submit}</div>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
+        <div className="flex justify-center mb-8">
+          <EchoLogo width={200} height={70} />
+        </div>
+
+        <AuthFormHeader isLogin={isLogin} />
+
+        <div className="space-y-6">
+        {!isLogin && (
+            <AuthFormInput
+              label="Full Name"
+              type="text"
+              name="fullName"
+             
+              placeholder="Enter your full name"
+            />
           )}
-          <SubmitButton isLogin={isLogin} loading={loading} />
-          </form>
-          <FormToggle 
-          isLogin={isLogin} 
-          onToggle={() => setIsLogin(!isLogin)} 
-        />
+
+            <AuthFormInput
+            label="Email Address"
+            type="email"
+            name="email"
+          
+          
+            placeholder="Enter your email"
+          />
+          
+          <AuthFormInput
+            label="Password"
+            type="password"
+            name="password"
+       
+            placeholder="Enter your password"
+          />
+
+          {!isLogin && (
+            <AuthFormInput
+              label="Confirm Password"
+              type="password"
+              name="confirmPassword"
+        
+              placeholder="Confirm your password"
+            />
+          )}
+          <div>
+            <button
+              type="submit"
+              style={{ backgroundColor: '#1da1f2' }}
+              className="w-full py-3 px-4 border border-transparent rounded-lg shadow-sm text-white font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              {isLogin ? 'Sign In' : 'Create Account'}
+            </button>
+          </div>
+
+          <div className="text-center">
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              className="text-blue-500 hover:text-blue-600 font-medium"
+            >
+              {isLogin ? 'Need an account? Sign up' : 'Already have an account? Sign in'}
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <SocialAuthButton 
+              provider="Google" 
+              icon="/api/placeholder/20/20" 
+            />
+            <SocialAuthButton 
+              provider="GitHub" 
+              icon="/api/placeholder/20/20" 
+            />
+          </div>
+        </div>
+      </div>
     </div>
-  )
-} 
+  );
+};
+
 export default AuthForm;
