@@ -40,9 +40,10 @@ router.post('/login',async(req,res)=>{
 
     req.session.User_id = user._id
     req.session.Username = user.username
+    req.session.Fullname = user.fullname
 
     
-    res.send({ message: "Login successful", user1: req.session.id , user2: req.session.Username});
+    res.send({ message: "Login successful", user1: req.session.id , user2: req.session.Username , user3: req.session.Fullname});
 
 })
 

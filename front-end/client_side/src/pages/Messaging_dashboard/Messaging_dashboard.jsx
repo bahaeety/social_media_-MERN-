@@ -30,11 +30,11 @@ const MessageDashboard = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-white dark:bg-gray-900">
+    <div className="flex h-screen bg-white">
       {/* Left Sidebar - Conversations List */}
-      <div className="w-96 border-r border-gray-200 dark:border-gray-800">
-        <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-          <h1 className="text-xl font-bold dark:text-white">Messages</h1>
+      <div className="w-96 border-r border-gray-200">
+        <div className="p-4 border-b border-gray-200">
+          <h1 className="text-xl font-bold">Messages</h1>
         </div>
         
         {/* Search Bar */}
@@ -44,8 +44,8 @@ const MessageDashboard = () => {
             <input
               type="text"
               placeholder="Search messages"
-              className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full 
-                       border-none focus:ring-2 focus:ring-blue-500 dark:text-gray-200"
+              className="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-full 
+                       border-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
@@ -55,7 +55,7 @@ const MessageDashboard = () => {
           {conversations.map((chat) => (
             <div
               key={chat.id}
-              className="flex items-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+              className="flex items-center p-4 hover:bg-gray-50 cursor-pointer"
             >
               <img
                 src={chat.avatar}
@@ -64,10 +64,10 @@ const MessageDashboard = () => {
               />
               <div className="ml-4 flex-1">
                 <div className="flex justify-between items-center">
-                  <h3 className="font-semibold dark:text-white">{chat.name}</h3>
+                  <h3 className="font-semibold">{chat.name}</h3>
                   <span className="text-sm text-gray-500">{chat.time}</span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{chat.username}</p>
+                <p className="text-sm text-gray-600">{chat.username}</p>
                 <p className="text-sm text-gray-500 truncate">{chat.lastMessage}</p>
               </div>
             </div>
@@ -78,7 +78,7 @@ const MessageDashboard = () => {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Chat Header */}
-        <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+        <div className="p-4 border-b border-gray-200 flex justify-between items-center">
           <div className="flex items-center">
             <img
               src="/api/placeholder/40/40"
@@ -86,11 +86,11 @@ const MessageDashboard = () => {
               className="w-10 h-10 rounded-full"
             />
             <div className="ml-4">
-              <h2 className="font-semibold dark:text-white">Sarah Wilson</h2>
+              <h2 className="font-semibold">Sarah Wilson</h2>
               <p className="text-sm text-gray-500">@sarahw</p>
             </div>
           </div>
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full">
+          <button className="p-2 hover:bg-gray-100 rounded-full">
             <MoreHorizontal className="h-5 w-5 text-gray-500" />
           </button>
         </div>
@@ -105,8 +105,8 @@ const MessageDashboard = () => {
               className="w-8 h-8 rounded-full mt-1"
             />
             <div className="ml-2">
-              <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-3">
-                <p className="text-gray-900 dark:text-gray-200">Hey! How's the portfolio coming along?</p>
+              <div className="bg-gray-100 rounded-2xl p-3">
+                <p className="text-gray-900">Hey! How's the portfolio coming along?</p>
               </div>
               <span className="text-xs text-gray-500 ml-2">2:30 PM</span>
             </div>
@@ -124,25 +124,25 @@ const MessageDashboard = () => {
         </div>
 
         {/* Message Input */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-800">
-          <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full p-2">
+        <div className="p-4 border-t border-gray-200">
+          <div className="flex items-center bg-gray-100 rounded-full p-2">
             <div className="flex space-x-2 px-2">
-              <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
+              <button className="p-2 hover:bg-gray-200 rounded-full">
                 <Image className="h-5 w-5 text-gray-500" />
               </button>
-              <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
+              <button className="p-2 hover:bg-gray-200 rounded-full">
                 <Link2 className="h-5 w-5 text-gray-500" />
               </button>
-              <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
+              <button className="p-2 hover:bg-gray-200 rounded-full">
                 <Smile className="h-5 w-5 text-gray-500" />
               </button>
             </div>
             <input
               type="text"
               placeholder="Start a new message"
-              className="flex-1 bg-transparent border-none focus:ring-0 px-4 dark:text-gray-200"
+              className="flex-1 bg-transparent border-none focus:ring-0 px-4"
             />
-            <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full">
+            <button className="p-2 hover:bg-gray-200 rounded-full">
               <Send className="h-5 w-5 text-blue-500" />
             </button>
           </div>

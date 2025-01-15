@@ -28,6 +28,7 @@ const AuthForm = () => {
        if(response.data.user2){
         localStorage.setItem('token', response.data.user1);
         localStorage.setItem('user', response.data.user2);
+        localStorage.setItem('fullname', response.data.user3);
         navigate('/')
        }
     }
