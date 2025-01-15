@@ -1,13 +1,22 @@
-import React from 'react';
 import { 
   Home, Search, Bell, Mail, Bookmark, 
-  Users, User, MoreHorizontal, MessageSquare, 
-  Briefcase, Star, Building
+  Users, User, MoreHorizontal, 
+  LogOut , Star, Building
 } from 'lucide-react';
+import Link from 'react-router-dom'
+import EchoLogo from '../../assets/logo_icon';
+import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+//API
+import {api} from '../../api/api';
+import { useEffect } from 'react';
 
-const NavButton = ({ icon: Icon, label }) => {
+const NavButton = ({onClick = null,icon: Icon, label }) => {
+  if(onClick === null){
+    onClick = () => {}
+  }
   return (
-    <button className="p-3 rounded-full hover:bg-blue-50 transition-colors inline-flex items-center gap-4 w-full group">
+    <button className="p-3 rounded-full hover:bg-blue-50 transition-colors inline-flex items-center gap-4 w-full group" onClick={()=>onClick()}>
       <Icon 
         size={26} 
         className="text-gray-900 group-hover:text-blue-500 transition-colors"
@@ -19,20 +28,28 @@ const NavButton = ({ icon: Icon, label }) => {
   );
 };
 
+
 const NavBar = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState('');
+  const handleLogOut = async () => {
+    console.log('Logging Out')
+    const logout = await api.post('/user/logout');
+     if(logout.data){
+      console.log('Logged Out')
+     localStorage.removeItem('user');
+     navigate('/login')
+        }
+   }
+   useEffect(() => {
+    const user = localStorage.getItem('user');
+    setUser(user);
+  }
+  , []);
   return (
     <div className="w-72 p-2 flex flex-col h-screen">
-      {/* Logo */}
-      <div className="p-3 rounded-full hover:bg-blue-50 cursor-pointer transition-colors group">
-        <svg 
-          viewBox="0 0 24 24" 
-          className="w-8 h-8 text-blue-500 group-hover:text-blue-600 transition-colors" 
-          fill="currentColor"
-        >
-          <g>
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </g>
-        </svg>
+      <div className=" rounded-full hover:bg-blue-50 cursor-pointer transition-colors group">
+      <EchoLogo height={80}/>
       </div>
 
       {/* Navigation Buttons */}
@@ -42,11 +59,11 @@ const NavBar = () => {
         <NavButton icon={Bell} label="Notifications" />
         <NavButton icon={Mail} label="Messages" />
         <NavButton icon={Bookmark} label="Bookmarks" />
-        <NavButton icon={Briefcase} label="Jobs" />
         <NavButton icon={Users} label="Communities" />
         <NavButton icon={Star} label="Premium" />
         <NavButton icon={Building} label="Verified Organizations" />
         <NavButton icon={User} label="Profile" />
+        <NavButton icon={LogOut} label="Log Out" onClick={handleLogOut} /> 
         <NavButton icon={MoreHorizontal} label="More" />
       </nav>
 
@@ -59,7 +76,7 @@ const NavBar = () => {
       <button className="mt-auto p-3 rounded-full hover:bg-blue-50 transition-colors flex items-center gap-3 w-full group">
         <div className="w-10 h-10 rounded-full bg-gray-300" />
         <div className="flex flex-col text-left">
-          <span className="font-bold group-hover:text-blue-500 transition-colors">Username</span>
+          <span className="font-bold group-hover:text-blue-500 transition-colors">{user}</span>
           <span className="text-gray-500">@handle</span>
         </div>
         <MoreHorizontal className="ml-auto group-hover:text-blue-500 transition-colors" />

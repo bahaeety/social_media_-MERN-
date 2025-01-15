@@ -10,14 +10,14 @@ const upload = multer({ storage: storage });
 const User = require('../models/user');
 
 router.post('/register',async (req, res) => {
-    const { Username, Email, Tel, Name, Password } = req.body;
+    const { username, email, phone_number, fullName, password } = req.body;
     
     const user = new User({
-        name: Name,
-        email: Email,
-        username: Username,
-        phone_number: Tel,
-        password: Password
+        fullname: fullName,
+        email: email,
+        username: username,
+        phone_number: phone_number,
+        password: password
     });
     console.log(user);
     await user.save();
@@ -25,15 +25,15 @@ router.post('/register',async (req, res) => {
 
 router.post('/login',async(req,res)=>{
 
-    const {Email,Password} = req.body;
-    console.log(Email)
-    const user = await User.findOne({email:Email});
+    const {email,password} = req.body;
+    console.log(email)
+    const user = await User.findOne({email:email});
     if(!user){
         return res.status(400).send({message:"User not found"});
     }
-    console.log(Password)
-    console.log(await bcrypt.compare(Password,user.password))
-    const isMatch = await bcrypt.compare(Password,user.password);
+    console.log(password)
+    console.log(await bcrypt.compare(password,user.password))
+    const isMatch = await bcrypt.compare(password,user.password);
     if(!isMatch){
         return res.status(400).send({message:"Invalid password"});
     }
@@ -42,7 +42,7 @@ router.post('/login',async(req,res)=>{
     req.session.Username = user.username
 
     
-    res.send({ message: "Login successful", user: user.username  , user1: req.session.id , user2: req.session.Username});
+    res.send({ message: "Login successful", user1: req.session.id , user2: req.session.Username});
 
 })
 
@@ -85,9 +85,9 @@ router.get('/session-checker',(req,res)=>{
     if(req.session.User_id){
         res.send({message:"Session is active",user_id:req.session.User_id , username: req.session.Username})
         }
-        else{
-            res.send({message:"Session is not active",user_id:null} )
-    }
+         else{
+             res.send({message:"Session is not active",user_id:null} )
+     }
 })
 
 module.exports = router;
