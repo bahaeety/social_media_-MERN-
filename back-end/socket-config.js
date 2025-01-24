@@ -14,9 +14,9 @@ const setupSocket = (server) => {
             users.set(username,socket.id);
             console.log('User joined: ' + username);
         })
-        socket.on('chat message', (msg) => {
-            console.log('Message received: ' + msg);
-            io.emit('chat message', msg);
+        socket.on('send_message', (msg) => {    
+            socket.broadcast.emit('receive_message', {message: msg ,senderId: socket.id });
+
         });
         
         socket.on('disconnect', () => {

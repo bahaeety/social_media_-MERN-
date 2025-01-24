@@ -1,8 +1,17 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, MoreHorizontal, Send, Image, Smile, Link2 } from 'lucide-react';
 import {io} from 'socket.io-client';
 const MessageDashboard = () => {
+  const socket = io('http://localhost:5000', {withCredentials: true});
+  const getTimeFormatted = () => {
+    return new Date().toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+}
+  const [Messages, setMessages] = useState([]);
   const conversations = [
     {
       id: 1,
@@ -29,18 +38,25 @@ const MessageDashboard = () => {
       avatar: "/api/placeholder/40/40"
     }
   ];
-
-  useEffect(() => {
-  const socket = io('http://localhost:5000', {withCredentials: true});
   socket.on('connect', () => {
     socket.emit('join', localStorage.getItem('user'));
     console.log(localStorage.getItem('user'))
-    console.log('Connected to server');});
-    return () => {
-      console.log("Cleanup : déconnexion"); 
-      socket.disconnect();
-    };
-  },[]);
+    console.log('Connected to server');
+
+  });
+  useEffect(() => {
+    socket.on('receive_message', (data) => {
+      if (socket.id !== data.senderId) {
+      setMessages(prevMessages => [...prevMessages, {
+        user: "guest",
+        message: data.message,
+        time: getTimeFormatted()
+      }]);
+      }
+    });
+  
+    return () => socket.off('receive_message');
+  }, []); 
   return (
     <div className="flex h-screen bg-white">
       <div className="w-96 border-r border-gray-200">
@@ -103,28 +119,33 @@ const MessageDashboard = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          <div className="flex items-start max-w-xl">
-            <img
-              src="/api/placeholder/32/32"
-              alt="Sarah"
-              className="w-8 h-8 rounded-full mt-1"
-            />
-            <div className="ml-2">
-              <div className="bg-gray-100 rounded-2xl p-3">
-                <p className="text-gray-900">Hey! How's the portfolio coming along?</p>
-              </div>
-              <span className="text-xs text-gray-500 ml-2">2:30 PM</span>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-end max-w-xl ml-auto">
+          {Messages.map((msg) => (
+            msg.user === "currentUser" ? (
+            <div className="flex items-start justify-end max-w-xl ml-auto">
             <div className="mr-2">
               <div className="bg-blue-500 rounded-2xl p-3">
-                <p className="text-white">It's going great! I'm working on the messaging dashboard right now.</p>
+                <p className="text-white">{msg.message}</p>
               </div>
-              <span className="text-xs text-gray-500 ml-2">2:31 PM</span>
+              <span className="text-xs text-gray-500 ml-2">{msg.time}</span>
             </div>
           </div>
+            ) :(
+              <div className="flex items-start max-w-xl">
+              <img
+                src="/api/placeholder/32/32"
+                alt="Sarah"
+                className="w-8 h-8 rounded-full mt-1"
+              />
+              <div className="ml-2">
+                <div className="bg-gray-100 rounded-2xl p-3">
+                  <p className="text-gray-900">{msg.message}</p>
+                </div>
+                <span className="text-xs text-gray-500 ml-2">{msg.time}</span>
+              </div>
+            </div>
+            )
+          ))}
+         
         </div>
 
         <div className="p-4 border-t border-gray-200">
@@ -144,8 +165,14 @@ const MessageDashboard = () => {
               type="text"
               placeholder="Start a new message"
               className="flex-1 bg-transparent border-none focus:ring-0 px-4"
+              onKeyDown={(e) =>{
+                if (e.key === 'Enter') {
+                  socket.emit('send_message', (e.target.value));
+                  setMessages(prevMessages => [...prevMessages, {user: "currentUser" , message: e.target.value , time: getTimeFormatted()}]);
+                }
+              }}
             />
-            <button className="p-2 hover:bg-gray-200 rounded-full">
+            <button type='submit' className="p-2 hover:bg-gray-200 rounded-full">
               <Send className="h-5 w-5 text-blue-500" />
             </button>
           </div>
