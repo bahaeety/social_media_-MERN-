@@ -56,7 +56,7 @@ const MessageDashboard = () => {
     });
   
     return () => socket.off('receive_message');
-  }, []); 
+  }, [Messages]); 
   return (
     <div className="flex h-screen bg-white">
       <div className="w-96 border-r border-gray-200">
