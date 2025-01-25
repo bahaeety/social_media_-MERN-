@@ -65,7 +65,7 @@ const NavBar = () => {
         <NavButton icon={Users} label="Communities" />
         <NavButton icon={Star} label="Premium" />
         <NavButton icon={Building} label="Verified Organizations" />
-        <NavButton icon={User} label="Profile" />
+        <Link to="profile"><NavButton icon={User} label="Profile" /></Link> 
         <NavButton icon={LogOut} label="Log Out" onClick={handleLogOut} /> 
         <NavButton icon={MoreHorizontal} label="More" />
       </nav>
