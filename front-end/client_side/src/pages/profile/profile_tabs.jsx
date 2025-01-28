@@ -13,7 +13,6 @@ const ProfileTabs = () => {
 
   return (
     <div className="border-t border-gray-200 mt-4">
-      {/* Tabs Navigation */}
       <div className="flex">
         {tabs.map(tab => (
           <button

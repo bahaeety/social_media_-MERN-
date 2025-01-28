@@ -57,7 +57,7 @@ const NavBar = () => {
 
       {/* Navigation Buttons */}
       <nav className="flex flex-col gap-1">
-        <NavButton icon={Home} label="Home" />
+        <Link to=""> <NavButton icon={Home} label="Home" /> </Link>
         <NavButton icon={Search} label="Explore" />
         <NavButton icon={Bell} label="Notifications" />
        <Link to="messaging"><NavButton icon={Mail} label="Messages" /></Link> 
@@ -77,13 +77,17 @@ const NavBar = () => {
 
       {/* Profile Section */}
       <button className="mt-auto p-3 rounded-full hover:bg-blue-50 transition-colors flex items-center gap-3 w-full group">
-        <div className="w-10 h-10 rounded-full bg-gray-300" />
+      <img
+          src="https://www.gravatar.com/avatar/?d=mp"
+          alt=""
+          className="w-10 h-10 rounded-full border-4 border-white shadow-md"
+              />  
         <div className="flex flex-col text-left">
           <span className="font-bold group-hover:text-blue-500 transition-colors">{fullname}</span>
           <span className="text-gray-500">@{user}</span>
         </div>
-        <MoreHorizontal className="ml-auto group-hover:text-blue-500 transition-colors" />
-      </button>
+          
+          </button>
     </div>
   );
 };

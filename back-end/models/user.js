@@ -45,6 +45,14 @@ var user = new Schema({
 
     },
     image:{
+        type:Buffer,
+        default:Buffer.alloc(0)
+    },
+    location:{
+    type:String,
+    default:""
+    },
+    website:{
         type:String,
         default:""
     },

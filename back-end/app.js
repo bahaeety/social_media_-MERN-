@@ -12,8 +12,8 @@ const User = require('./models/user');
 const clientOrigin = `http://localhost:${process.env.CLIENT_PORT}`;
 
 const app = express();
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json());
+app.use(express.urlencoded({ extended: true , limit: '10mb'  }))
+app.use(express.json({limit: '10mb' }));
 app.use(cors({
     origin: clientOrigin, 
     credentials: true, 
